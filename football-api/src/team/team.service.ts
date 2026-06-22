@@ -32,7 +32,8 @@ export class TeamService {
 
   findOne(id: string) {
     return this.prismaService.team.findUnique({
-      where: {id}
+      where: {id},
+      include: {players: true}
     });
   }
 

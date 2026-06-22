@@ -15,12 +15,16 @@ export class PlayerService {
   }
 
   findAll() {
-    return this.prismaService.player.findMany();
+    return this.prismaService.player.findMany({
+      include: {team: true}
+    }
+    );
   }
 
   findOne(id: string) {
     return this.prismaService.player.findUnique({
       where: {id},
+      include: {team: true}
     });
   }
 

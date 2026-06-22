@@ -10,4 +10,10 @@ export class PrismaService extends PrismaClient {
     });
     super({ adapter });
   }
+  async onModuleInit() {
+    // 🕵️‍♂️ ESTE ESPÍA NOS VA A DECIR LA VERDAD:
+    console.log('🔌 PRISMA INTENTANDO CONECTAR A:', process.env.DATABASE_URL);
+    
+    await this.$connect();
+  }
 }
