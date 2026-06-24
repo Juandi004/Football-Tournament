@@ -1,11 +1,11 @@
-import React from 'react'
-
-export const Dashboard = () => {
+const Home = () => {
   return (
+    <>
     <div>
-        Hola
+      <h1 className='text-5xl'>Hola</h1>
     </div>
+    </>
   )
 }
 
-export default Dashboard
+export default Home
