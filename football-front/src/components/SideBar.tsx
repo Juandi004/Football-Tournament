@@ -1,6 +1,9 @@
+import { useState } from "react"
 import { NavLink } from "react-router-dom"
 
 export default function SideBar() {
+
+  const [open, setOpen] = useState(true)
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     `block rounded-md px-3 py-2 transition-colors text-sm font-medium
