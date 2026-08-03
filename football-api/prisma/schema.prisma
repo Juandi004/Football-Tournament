@@ -10,14 +10,20 @@ datasource db {
 
 model Player {
   id     String @id @default(uuid())
-  number String
+  number String 
   teamId String
   name   String
   team   Team   @relation(fields: [teamId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  @@unique([teamId, number])
+  @@index([teamId])
 }
 
 model Team {
   id      String   @id @default(uuid())
   name    String   @unique
   players Player[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }

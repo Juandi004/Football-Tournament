@@ -35,9 +35,11 @@ const Teams = () => {
         {data?.map(team => (
           <div
             key={team.id}
-            className="bg-neutral-900 border border-neutral-700 rounded-xl p-5 hover:border-neutral-500 transition-colors"
+            className="flex flex-col justify-between p-6 bg-slate-900/60 border border-slate-800 rounded-2xl shadow-2xl backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-500/50 group"
+
           >
-            <h2 className="text-white font-semibold text-lg">{team.name}</h2>
+            <h2 className="text-4xl md:text-xl font-black tracking-tight bg-gradient-to-r from-blue-400 via-skyblue-500 to-teal-500 bg-clip-text text-transparent">
+              {team.name}</h2>
             <span className="inline-block mt-3 text-xs text-slate-500">
             </span>
           </div>
