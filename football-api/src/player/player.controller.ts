@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { PlayerService } from './player.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
@@ -21,8 +22,8 @@ export class PlayerController {
   }
 
   @Get()
-  findAll() {
-    return this.playerService.findAll();
+  findAll(@Query('page') page?: string, @Query('limit') limit?: string) {
+    return this.playerService.findAll(Number(page), Number(limit));
   }
 
   @Get(':id')

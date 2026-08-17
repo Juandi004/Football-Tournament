@@ -11,7 +11,7 @@ export const useApi = <T>(endpoint: string) => {
       try {
         setLoading(true);
         setError(null);
-        const url = "http://localhost:3000/"
+        const url = import.meta.env.VITE_API_URL;
         const response = await axios.get<T>(`${url}${endpoint}`);
         setData(response.data);
       } catch (err: any) {
