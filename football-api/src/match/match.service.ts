@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { UpdateMatchDto } from './dto/update-match.dto';
 import { BaseService } from 'src/base.service';
@@ -33,7 +33,10 @@ export class MatchService extends BaseService{
   }
 
   async create(createMatchDto: CreateMatchDto) {
-    return await this.prismaService.match.create({
+    if(createMatchDto.homeTeamId == createMatchDto.awayTeamId){
+      throw new BadRequestException('El equipo Local y Visitante no pueden ser los mismos');
+    }
+      return await this.prismaService.match.create({
       data: createMatchDto,
       include: {
         homeTeam: true,
@@ -43,9 +46,19 @@ export class MatchService extends BaseService{
   }
 
   async update(id: string, updateMatchDto: UpdateMatchDto){
-   return await this.prismaService.match.update({
+    if(
+      updateMatchDto.homeTeamId &&
+      updateMatchDto.awayTeamId &&
+      updateMatchDto.homeTeamId == updateMatchDto.awayTeamId){
+      throw new BadRequestException('El equipo Local y Visitante no pueden ser los mismos');
+    }
+      return await this.prismaService.match.update({
       where: {id},
-      data: updateMatchDto
+      data: updateMatchDto,
+      include: {
+        homeTeam: true,
+        awayTeam: true
+      }
     })
   }
 

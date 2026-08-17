@@ -10,6 +10,12 @@ export class PlayerService extends BaseService {
     super(prismaService.player);
   }
 
+  create(createPlayerDto: CreatePlayerDto) {
+    return this.prismaService.player.create({
+      data: createPlayerDto
+    })
+  }
+
   findAll(page = 1, limit = 10) {
     return this.findAllPaginated(page, limit);
   }

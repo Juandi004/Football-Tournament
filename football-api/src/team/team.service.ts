@@ -36,14 +36,14 @@ export class TeamService {
     return newTeam;
   }
 
-  findAll() {
-    return this.prismaService.team.findMany({
+  async findAll() {
+    return  await this.prismaService.team.findMany({
       include: { players: true },
     });
   }
 
-  findOne(id: string) {
-    return this.prismaService.team.findUnique({
+  async findOne(id: string) {
+    return await this.prismaService.team.findUnique({
       where: { id },
       include: { players: true },
     });

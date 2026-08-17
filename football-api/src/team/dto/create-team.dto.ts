@@ -8,4 +8,8 @@ export class CreateTeamDto {
 
     @IsArray()
     players?: string[]
+
+    @IsArray()
+    @ApiProperty()
+    matches?: string[]
 }

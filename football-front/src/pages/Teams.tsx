@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useApi } from '../hooks/useApi'
 import { useMethods } from '../hooks/useMethods'
+import { refetch } from '../functions/refetch'
+import { Dialog, DialogContent, DialogClose, DialogTrigger } from '../components/ui/dialog'
 
 interface Team {
   id: string
@@ -15,49 +17,39 @@ interface Player {
 }
 
 const Teams = () => {
-  // Estado para crear
   const [teamName, setTeamName] = useState('');
 
-  // 1. Estados para saber qué equipo estamos editando en pantalla
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingName, setEditingName] = useState('');
 
-  // búsqueda
   const [searchTerm, setSearchTerm]=useState("");
 
   const { handleCreate, handleDelete, handleEdit, loading: isCreating, error: createError } = useMethods<Team>('team')
   const { data, loading, error } = useApi<Team[]>('team')
 
-  // Crear
   const onCreate = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!teamName.trim()) return
 
     await handleCreate({ name: teamName })
     setTeamName('')
+    refetch()
   }
 
   const filteredTeams = data?.filter(t => t.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
-  // Borrar
   const onDelete = async (id: string) => {
     await handleDelete('team/' + id)
+    refetch()
   }
-
-  // 2. Función para ACTIVAR el modo edición en una tarjeta
   const startEditing = (team: Team) => {
     setEditingId(team.id)
-    setEditingName(team.name) // Llenamos el input con el nombre actual
+    setEditingName(team.name) 
   }
 
-  // 3. Función para GUARDAR los cambios en la API
   const onSaveEdit = async (id: string) => {
     if (!editingName.trim()) return
-
-    // Llamamos al handleEdit del hook
     await handleEdit({ name: editingName }, 'team/' + id)
-
-    // Salimos del modo edición limpiando el ID
     setEditingId(null)
     setEditingName('')
   }
@@ -77,8 +69,6 @@ const Teams = () => {
   return (
     <div className="p-6 w-full max-w-7xl mx-auto">
       <h1 className="text-2xl font-bold text-white mb-6">Crear equipo</h1>
-
-      {/* FORMULARIO DE CREAR */}
       <form onSubmit={onCreate} className="mb-8 flex gap-3 max-w-md">
         <input 
           value={teamName} 
@@ -108,7 +98,6 @@ const Teams = () => {
      
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredTeams && filteredTeams.length > 0 ? (
-          // 🟢 OPCIÓN A: Si hay equipos, hace el .map()
           filteredTeams.map(team => {
             const isEditingThis = editingId === team.id
 
@@ -141,9 +130,26 @@ const Teams = () => {
                     </div>
                   </div>
                 ) : (
-                  <h2 className="text-xl font-black tracking-tight bg-gradient-to-r from-blue-400 via-sky-400 to-teal-400 bg-clip-text text-transparent">
-                    {team.name}
-                  </h2>
+                <Dialog>
+                  <DialogTrigger>
+                    <button>
+                      Abrid
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    {data?.map((t, i)=>(
+                      <div key={i}>
+                        <h1>Nombre: {t.name}</h1>
+                        <h1>Jugadores</h1>
+                        {t.players.map((p, i)=>(
+                          <li key={i}>
+                            <ul>Nombre: {p.name}</ul>
+                          </li>
+                        ))}
+                      </div>
+                    ))}
+                  </DialogContent>
+                </Dialog>
                 )}
 
                 {!isEditingThis && (
@@ -166,7 +172,6 @@ const Teams = () => {
             )
           })
         ) : (
-          // 🔴 OPCIÓN B: Si no hay coincidencias en la búsqueda
           <p className="text-slate-400 text-center col-span-full py-8">
             No se encontraron equipos
           </p>
