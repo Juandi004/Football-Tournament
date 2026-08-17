@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TeamService } from './team.service';
 import { TeamController } from './team.controller';
 import { PrismaModule } from '../prisma/prisma.module';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [

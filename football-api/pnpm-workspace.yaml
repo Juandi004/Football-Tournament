@@ -1,5 +1,6 @@
 allowBuilds:
   '@prisma/engines': false
   '@scarf/scarf': false
+  es5-ext: false
   prisma: false
   unrs-resolver: false

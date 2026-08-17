@@ -8,22 +8,57 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Status {
+  SCHEDULED
+  PLAYING
+  FINISHED
+  SUSPENDED
+  DELAYED
+}
+
 model Player {
-  id     String @id @default(uuid())
-  number String 
-  teamId String
-  name   String
-  team   Team   @relation(fields: [teamId], references: [id])
+  id        String   @id @default(uuid())
+  number    String 
+  teamId    String
+  name      String
+  team      Team     @relation(fields: [teamId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
   @@unique([teamId, number])
   @@index([teamId])
 }
 
 model Team {
-  id      String   @id @default(uuid())
-  name    String   @unique
-  players Player[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id          String   @id @default(uuid())
+  name        String   @unique
+  players     Player[]
+  homeMatches Match[]  @relation("HomeMatches")
+  awayMatches Match[]  @relation("AwayMatches")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+}
+
+model Match {
+  id          String   @id @default(uuid())
+  
+  // Home Team
+  homeTeamId  String
+  homeTeam    Team     @relation("HomeMatches", fields: [homeTeamId], references: [id])
+  homeScore   Int      @default(0)
+
+  // Away Team
+  awayTeamId  String
+  awayTeam    Team     @relation("AwayMatches", fields: [awayTeamId], references: [id])
+  awayScore   Int      @default(0)
+
+  // Date & Status
+  status      Status   @default(SCHEDULED)
+  matchDate   DateTime @default(now())
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  @@index([homeTeamId])
+  @@index([awayTeamId])
 }
