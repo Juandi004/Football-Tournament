@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { useApi } from '../hooks/useApi'
 import { useMethods } from '../hooks/useMethods'
 import { refetch } from '../functions/refetch'
-import { Dialog, DialogContent, DialogClose, DialogTrigger } from '../components/ui/dialog'
+import { Dialog, DialogContent,  DialogTrigger } from '../components/ui/dialog'
 
-interface Team {
+export interface Team {
   id: string
   name: string
   players: Player[]
@@ -133,21 +133,24 @@ const Teams = () => {
                 <Dialog>
                   <DialogTrigger>
                     <button>
-                      Abrid
+                      {team.name}
                     </button>
                   </DialogTrigger>
                   <DialogContent>
-                    {data?.map((t, i)=>(
-                      <div key={i}>
-                        <h1>Nombre: {t.name}</h1>
-                        <h1>Jugadores</h1>
-                        {t.players.map((p, i)=>(
-                          <li key={i}>
-                            <ul>Nombre: {p.name}</ul>
+                    <div>
+                      <h1>Nombre del equipo: {team.name}</h1>
+                      <h2>Jugadores</h2>
+                      {team.players.length > 0 ? (
+                        <h1> No existen jugadores</h1>
+                      ): (
+                        team.players.map(p => (
+                          <li key={p.id}>
+                            {p.name}
+                            
                           </li>
-                        ))}
-                      </div>
-                    ))}
+                        ))
+                      )}
+                    </div>
                   </DialogContent>
                 </Dialog>
                 )}

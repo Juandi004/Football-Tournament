@@ -9,7 +9,7 @@ export const Pages: PageProps[] = [
         url: "/teams"
     },
     {
-        name: "Jugadores",
-        url: "/players"
-    }
+        name: "Partidos",
+        url: "/matche"
+    },
 ]

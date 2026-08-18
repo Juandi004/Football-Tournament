@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { MainLayout } from './components/layouts/AdminLayout'
 import Dashboard from './pages/Dashboard'
 import Teams from './pages/Teams'
+import { Matches } from './pages/Matches'
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/teams" element={<Teams />} />
+          <Route path="/matches" element={<Matches />} />
         </Routes>
       </MainLayout>
     </BrowserRouter>

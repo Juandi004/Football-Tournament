@@ -27,25 +27,26 @@ export default function SideBar() {
           <ul className="mt-2 space-y-0.5">
             <li><NavLink to="/" end className={linkClass}>Inicio</NavLink></li>
             <li><NavLink to="/teams" className={linkClass}>Equipos</NavLink></li>
+            <li><NavLink to="/matches" className={linkClass}>Partidos</NavLink></li>
           </ul>
         </div>
 
-        <div className="mt-6">
+{/*         <div className="mt-6">
           <p className="text-black dark:text-slate-50 text-sm font-semibold px-3">Income</p>
           <ul className="mt-2 space-y-0.5">
             <li><NavLink to="/earnings" className={linkClass}>Earnings and taxes</NavLink></li>
             <li><NavLink to="/refunds" className={linkClass}>Refunds</NavLink></li>
             <li><NavLink to="/declines" className={linkClass}>Declines</NavLink></li>
           </ul>
-        </div>
+        </div> */}
 
-        <div className="mt-6">
+{/*         <div className="mt-6">
           <p className="text-black dark:text-slate-50 text-sm font-semibold px-3">Actions</p>
           <ul className="mt-2 space-y-0.5">
             <li><NavLink to="/profile" className={linkClass}>Profile</NavLink></li>
             <li><NavLink to="/settings" className={linkClass}>Settings</NavLink></li>
           </ul>
-        </div>
+        </div> */}
 
       </nav>
     </aside>
