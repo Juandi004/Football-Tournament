@@ -5,10 +5,12 @@ import { PlayerModule } from './player/player.module';
 import { TeamModule } from './team/team.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { MatchModule } from './match/match.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 
 @Module({
-  imports: [PlayerModule, TeamModule, PrismaModule, MatchModule],
+  imports: [PlayerModule, TeamModule, PrismaModule, MatchModule, AuthModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })

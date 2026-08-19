@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '../../generated/prisma/client.js';
+import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 @Injectable()
@@ -11,8 +11,7 @@ export class PrismaService extends PrismaClient {
     super({ adapter });
   }
   async onModuleInit() {
-    // 🕵️‍♂️ ESTE ESPÍA NOS VA A DECIR LA VERDAD:
-    console.log('🔌 PRISMA INTENTANDO CONECTAR A:', process.env.DATABASE_URL);
+    console.log('🔌 PRISMA CONECTADO A:', process.env.DATABASE_URL);
     
     await this.$connect();
   }

@@ -12,8 +12,8 @@ const Home = () => {
           Panel de administración de partidos, torneos y plantillas de jugadores.
         </p>
       </header>
-      <main className="w-full max-w-4xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <main className="w-full max-w-screen">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
           {Pages.map((p) => (
             <div 
               key={p.url}

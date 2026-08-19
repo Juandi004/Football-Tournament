@@ -1,7 +1,5 @@
 generator client {
-  provider     = "prisma-client"
-  output       = "../generated/prisma"
-  moduleFormat = "cjs"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -16,49 +14,79 @@ enum Status {
   DELAYED
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id          String       @id @default(uuid())
+  email       String       @unique
+  password    String
+  name        String?
+  role        Role         @default(USER)
+  tournaments Tournament[] 
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Tournament {
+  id          String    @id @default(uuid())
+  name        String    @default("No Especificado")
+  isPublic    Boolean   @default(true) 
+  adminId     String
+  admin       User      @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  teams       Team[]
+  matches     Match[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([adminId])
+}
+
+model Team {
+  id           String     @id @default(uuid())
+  name         String     
+  tournamentId String     @default("")
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  players      Player[]
+  homeMatches  Match[]    @relation("HomeMatches")
+  awayMatches  Match[]    @relation("AwayMatches")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  @@unique([tournamentId, name])
+  @@index([tournamentId])
+}
+
 model Player {
   id        String   @id @default(uuid())
+  name      String
   number    String 
   teamId    String
-  name      String
-  team      Team     @relation(fields: [teamId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   @@unique([teamId, number])
   @@index([teamId])
 }
 
-model Team {
-  id          String   @id @default(uuid())
-  name        String   @unique
-  players     Player[]
-  homeMatches Match[]  @relation("HomeMatches")
-  awayMatches Match[]  @relation("AwayMatches")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
-}
-
 model Match {
-  id          String   @id @default(uuid())
-  
-  // Home Team
-  homeTeamId  String
-  homeTeam    Team     @relation("HomeMatches", fields: [homeTeamId], references: [id])
-  homeScore   Int      @default(0)
-
-  // Away Team
-  awayTeamId  String
-  awayTeam    Team     @relation("AwayMatches", fields: [awayTeamId], references: [id])
-  awayScore   Int      @default(0)
-
-  // Date & Status
-  status      Status   @default(SCHEDULED)
-  matchDate   DateTime @default(now())
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
-
+  id           String     @id @default(uuid())
+  tournamentId String     @default("")
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  homeTeamId   String
+  homeTeam     Team       @relation("HomeMatches", fields: [homeTeamId], references: [id])
+  homeScore    Int        @default(0)
+  awayTeamId   String
+  awayTeam     Team       @relation("AwayMatches", fields: [awayTeamId], references: [id])
+  awayScore    Int        @default(0)
+  status       Status     @default(SCHEDULED)
+  matchDate    DateTime   @default(now())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  @@index([tournamentId])
   @@index([homeTeamId])
   @@index([awayTeamId])
 }

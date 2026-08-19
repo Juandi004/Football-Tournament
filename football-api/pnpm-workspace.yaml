@@ -1,6 +1,7 @@
 allowBuilds:
   '@prisma/engines': false
   '@scarf/scarf': false
+  bcrypt: set this to true or false
   es5-ext: false
   prisma: false
   unrs-resolver: false
