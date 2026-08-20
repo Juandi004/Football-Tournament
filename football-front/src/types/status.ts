@@ -1,7 +1,7 @@
-export type Status = {
-  SCHEDULED: any,
-  PLAYING: any,
-  FINISHED: any,
-  SUSPENDED: any,
-  DELAYED: any
-}
+export type Status = 
+ 'SCHEDULED' |
+  'PLAYING' |
+  'FINISHED' |
+  'SUSPENDED' |
+  'DELAYED' 
+

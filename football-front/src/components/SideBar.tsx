@@ -1,9 +1,11 @@
-import { useState } from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
+import { useAuthStore } from "@/store/authStore"
 
 export default function SideBar() {
 
-  const [open, setOpen] = useState(true)
+  const navigation =useNavigate()
+
+ let isAuthenticated = useAuthStore.getState()
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     `block rounded-md px-3 py-2 transition-colors text-sm font-medium
@@ -14,8 +16,9 @@ export default function SideBar() {
      }`
 
   return (
-    <aside className="bg-white dark:bg-neutral-900 border-r border-slate-300 dark:border-neutral-700 w-full h-full fixed top-0 left-0 max-w-[264px] py-6 px-4 overflow-auto">
-
+    <div>
+      {isAuthenticated.isAuthenticated == true ? (
+           <aside className="bg-white dark:bg-neutral-900 border-r border-slate-300 dark:border-neutral-700 w-full h-full fixed top-0 left-0 max-w-[264px] py-6 px-4 overflow-auto">
       <div className="min-w-9 mb-8 px-3">
         <img src="https://readymadeui.com/logo-alt.svg" alt="Company logo" className="h-9 w-auto" />
       </div>
@@ -25,7 +28,7 @@ export default function SideBar() {
         <div className="mt-6">
           <p className="text-black dark:text-slate-50 text-sm font-semibold px-3">Menú Principal</p>
           <ul className="mt-2 space-y-0.5">
-            <li><NavLink to="/" end className={linkClass}>Inicio</NavLink></li>
+            <li><NavLink to="/home" end className={linkClass}>Inicio</NavLink></li>
             <li><NavLink to="/teams" className={linkClass}>Equipos</NavLink></li>
             <li><NavLink to="/matches" className={linkClass}>Partidos</NavLink></li>
           </ul>
@@ -49,6 +52,12 @@ export default function SideBar() {
         </div> */}
 
       </nav>
-    </aside>
+    </aside> 
+      ): (
+        <div>
+          A
+        </div>
+      )}
+    </div>
   )
 }

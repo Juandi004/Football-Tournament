@@ -1,4 +1,4 @@
-import { Pages } from "../types/page"
+import { Pages } from "../types/Page"
 import { Link } from "react-router-dom"
 
 const Home = () => {
