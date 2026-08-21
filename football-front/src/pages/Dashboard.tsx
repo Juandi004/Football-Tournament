@@ -1,7 +1,7 @@
 import { Pages } from "../types/Page"
 import { Link } from "react-router-dom"
 
-const Home = () => {
+export const Dashboard = () => {
   return (
     <div className="min-h-screen bg-dark text-slate-100 p-6 flex flex-col items-start select-none">  
       <header className="my-12 max-w-2xl">
@@ -45,5 +45,3 @@ const Home = () => {
     </div>
   )
 }
-
-export default Home

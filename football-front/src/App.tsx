@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { MainLayout } from './components/layouts/AdminLayout'
-import Dashboard from './pages/Dashboard'
+import {Dashboard} from './pages/Dashboard'
 import Teams from './pages/Teams'
 import { Matches } from './pages/Matches'
 import { Tournament } from './pages/Tournament'

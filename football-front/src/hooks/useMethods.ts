@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "../store/AuthStore";
 
 export const useMethods = <T>(endpoint: string) => {
 
@@ -68,17 +68,18 @@ export const useMethods = <T>(endpoint: string) => {
 
     try {
       const response = await axios.post(`${url}${exactEndpoint}`, payload);
-      setData(response.data);
+      const {access_token, user} = response.data
       login({
-        id: response.data.id,
-        name: response.data.name,
-        email: response.data.email,
-        role: response.data.role,
-      }, response.data.acces_token);
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      }, access_token);
       return response.data
 
     } catch (err: any) {
       console.log("Error en la petición: ", err)
+      throw err
     }
     finally{
       setLoading(false)

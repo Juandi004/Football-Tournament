@@ -1,12 +1,20 @@
 import type { User } from '@/types/User'
 import { persist } from 'zustand/middleware';
 import { create } from 'zustand'
+import type { Role } from '@/types/Role';
+
+interface AuthUser {
+  id: number | string;
+  name: string;
+  email: string;
+  role: Role;
+}
 
 interface AuthState {
-  user: User | null;
+  user: AuthUser | null;
   token: string | null;
   isAuthenticated: boolean;
-  login: (user: User, token: string) => void;
+  login: (user: AuthUser, token: string) => void;
   logout: () => void;
 }
 
@@ -17,7 +25,7 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       isAuthenticated: false,
 
-      login: (user: User, token: string) =>
+      login: (user: AuthUser, token: string) =>
         set({
           user,
           token,
