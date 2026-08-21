@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { LoaderCircle } from 'lucide-react';
 import {
   Card,
   CardAction,
@@ -78,8 +79,6 @@ export const Authentication = () => {
 
   return (
     <div className="min-h-screen w-full flex justify-center items-center p-4 relative">
-      
-      {/* Contenedor flotante de notificaciones en la esquina superior derecha */}
       <div className="fixed top-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full">
         <SuccessAlert 
           success={isSuccess}
@@ -162,7 +161,7 @@ export const Authentication = () => {
                 }}
                 variant="link"
               >
-                {loading ? 'Iniciando Sesión...' : 'Iniciar Sesión'}
+                Iniciar Sesión
               </Button>
             </CardAction>
           </CardHeader>
